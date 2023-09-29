@@ -11,7 +11,7 @@ O objetivo do código é coletar os dados da API Yahoo Finance e exibi-los no gr
 * yfinance
 
 ---
-![image](assets/localhost.png)
+![image](Assets/localhost.png)
 
 
 ---
@@ -48,7 +48,7 @@ requisitos para um ambiente virtual;
 12. Para rodar o projeto, digite
 ( C:\path\project> streamlit run app.py)
 
-- ![image](assets/cmd.png)
+- ![image](Assets/cmd.png)
 
 ---
 ---
@@ -68,7 +68,7 @@ The purpose of the code is to collect data from the Yahoo Finance API and displa
 - plotly.subplots
 - yfinance
 
-![image](assets/localhost.png)
+![image](Assets/localhost.png)
 
 ## Steps to Implement the Solution:
 
@@ -88,4 +88,4 @@ The purpose of the code is to collect data from the Yahoo Finance API and displa
 11. Install the libraries (`pip install lib`);
 12. To run the project, type (`C:\path\project> streamlit run app.py`);
 
-- ![image](assets/cmd.png)
+- ![image](Assets/cmd.png)
