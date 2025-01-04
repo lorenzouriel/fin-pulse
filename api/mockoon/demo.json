@@ -1,0 +1,207 @@
+{
+  "uuid": "82e4924f-1f7d-48e8-ba21-068436f8b62e",
+  "lastMigration": 33,
+  "name": "Demo Geosiga",
+  "endpointPrefix": "api",
+  "latency": 0,
+  "port": 3002,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "95742394-ec08-4612-831d-f34766ff9202",
+      "type": "http",
+      "documentation": "Applications by id",
+      "method": "get",
+      "endpoint": "applications/:id/assets",
+      "responses": [
+        {
+          "uuid": "b10706ad-2aec-42e8-8101-1a506431185b",
+          "body": "[\n  {{#repeat 950}}\n  {\n    \"id\": \"{{urlParam 'id'}}\",\n    \"name\": \"{{faker 'vehicle.vehicle'}}\", \n    \"type\": \"{{faker 'vehicle.type'}}\", \n    \"location\": {\n      \"last_connection\": \"{{faker 'date.recent'}}\", \n      \"latitude\": \"{{faker 'location.latitude'}}\", \n      \"longitude\": \"{{faker 'location.longitude'}}\", \n      \"blocked\": \"{{faker 'number.int' 1}}\"\n    },\n    \"status\": \"{{faker 'number.int' 1}}\"\n  }\n  {{/repeat}}\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "22b64f42-2e41-4c7e-8400-8b95988ac7fd",
+      "type": "http",
+      "documentation": "Applications",
+      "method": "get",
+      "endpoint": "applications",
+      "responses": [
+        {
+          "uuid": "d9483af3-e857-41f1-976b-c3bbe05541cb",
+          "body": "[\r\n  {{#repeat 50}}\r\n  {\r\n    \"id\": \"{{faker 'number.int' 500}}\",\r\n    \"name\": \"{{faker 'company.name'}}\",\r\n    \"description\": \"{{faker 'company.buzzPhrase'}}\",\r\n    \"created_at\": \"{{faker 'date.past'}}\",\r\n    \"expire\": \"{{faker 'date.future'}}\"\r\n  }\r\n  {{/repeat}}\r\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "1420371b-6ea8-45db-9332-14c65cddeacd",
+      "type": "http",
+      "documentation": "tracks",
+      "method": "get",
+      "endpoint": "tracks",
+      "responses": [
+        {
+          "uuid": "fc243a81-10b3-4cc6-a2f6-8271860e8dcf",
+          "body": "[\r\n  {{#repeat 5}}\r\n  {\r\n    \"track_id\": \"{{faker 'number.int' 500000}}\",\r\n    \"asset_id\": \"{{faker 'number.int' 4500}}\",\r\n    \"timestamp\": \"{{faker 'date.anytime'}}\",\r\n    \"routes\": [\r\n      {{#repeat 2}}\r\n        {\r\n          \"route_id\": \"{{faker 'number.int' 500000}}\",\r\n          \"start_location\": {\r\n            \"latitude\": \"{{faker 'location.latitude'}}\", \r\n            \"longitude\": \"{{faker 'location.longitude'}}\"\r\n          },\r\n          \"end_location\": {\r\n            \"latitude\": \"{{faker 'location.latitude'}}\", \r\n            \"longitude\": \"{{faker 'location.longitude'}}\"\r\n          },\r\n          \"distance_km\": \"{{faker 'number.float' 60}}\",\r\n          \"timestamp\": \"{{faker 'date.anytime'}}\"\r\n        }\r\n      {{/repeat}}\r\n    ],\r\n    \"stops\": [\r\n      {{#repeat 2}}  \r\n        {\r\n          \"stop_id\": \"{{faker 'number.int' 500000}}\",\r\n          \"location\": {\r\n            \"latitude\": \"{{faker 'location.latitude'}}\", \r\n            \"longitude\": \"{{faker 'location.longitude'}}\"\r\n          },\r\n          \"duration_minutes\": \"{{faker 'number.int' 60}}\",\r\n          \"timestamp\": \"{{faker 'date.anytime'}}\"\r\n        }\r\n      {{/repeat}}\r\n    ]\r\n  }\r\n   {{/repeat}}\r\n]\r\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "57f55d44-c5fd-48f3-8b35-ea6d8f40f6f0",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "tracks/assets/:id",
+      "responses": [
+        {
+          "uuid": "367058e7-bf61-429f-8328-e7bcb4e67961",
+          "body": "[\r\n  {{#repeat 5}}\r\n  {\r\n    \"track_id\": \"{{faker 'number.int' 500000}}\",\r\n    \"asset_id\": \"{{urlParam 'id'}}\",\r\n    \"timestamp\": \"{{faker 'date.anytime'}}\",\r\n    \"routes\": [\r\n      {{#repeat 2}}\r\n        {\r\n          \"route_id\": \"{{faker 'number.int' 500000}}\",\r\n          \"start_location\": {\r\n            \"latitude\": \"{{faker 'location.latitude'}}\", \r\n            \"longitude\": \"{{faker 'location.longitude'}}\"\r\n          },\r\n          \"end_location\": {\r\n            \"latitude\": \"{{faker 'location.latitude'}}\", \r\n            \"longitude\": \"{{faker 'location.longitude'}}\"\r\n          },\r\n          \"distance_km\": \"{{faker 'number.float' 60}}\",\r\n          \"timestamp\": \"{{faker 'date.anytime'}}\"\r\n        }\r\n      {{/repeat}}\r\n    ],\r\n    \"stops\": [\r\n      {{#repeat 2}}  \r\n        {\r\n          \"stop_id\": \"{{faker 'number.int' 500000}}\",\r\n          \"location\": {\r\n            \"latitude\": \"{{faker 'location.latitude'}}\", \r\n            \"longitude\": \"{{faker 'location.longitude'}}\"\r\n          },\r\n          \"duration_minutes\": \"{{faker 'number.int' 60}}\",\r\n          \"timestamp\": \"{{faker 'date.anytime'}}\"\r\n        }\r\n      {{/repeat}}\r\n    ]\r\n  }\r\n   {{/repeat}}\r\n]\r\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "95742394-ec08-4612-831d-f34766ff9202"
+    },
+    {
+      "type": "route",
+      "uuid": "22b64f42-2e41-4c7e-8400-8b95988ac7fd"
+    },
+    {
+      "type": "route",
+      "uuid": "1420371b-6ea8-45db-9332-14c65cddeacd"
+    },
+    {
+      "type": "route",
+      "uuid": "57f55d44-c5fd-48f3-8b35-ea6d8f40f6f0"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "a2c7ad28-1116-490a-92f6-40116c24e140",
+      "id": "l20t",
+      "name": "Users",
+      "documentation": "",
+      "value": "[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'string.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"
+    }
+  ],
+  "callbacks": []
+}
