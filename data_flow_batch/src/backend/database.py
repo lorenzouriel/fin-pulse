@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import yfinance as yf
 from datetime import datetime
 
-# Load .env file
 load_dotenv()
 
 DB_SERVER = os.getenv('DB_SERVER')
@@ -44,11 +43,9 @@ def post_stock_data(stock_id, ticker, period):
         period (str): The period for historical data (e.g., "5d", "1mo", "1y").
     """
     try:
-        # Connect to the database
         conn = mysql.connector.connect(**DB_CONFIG)
         cursor = conn.cursor()
 
-        # Fetch stock details from the database
         cursor.execute('SELECT id FROM stock.stocks WHERE ticker = %s;', (ticker,))
         result = cursor.fetchone()
 
@@ -59,7 +56,6 @@ def post_stock_data(stock_id, ticker, period):
         stock = stock_id
         print(f"Fetching data for ticker: {ticker}, period: {period}")
 
-        # Fetch historical data using yfinance
         ticker_data = yf.Ticker(ticker)
         historical_data = ticker_data.history(period=period)
 
@@ -67,7 +63,6 @@ def post_stock_data(stock_id, ticker, period):
             print(f"No historical data found for ticker: {ticker}")
             return
 
-        # Insert historical data into the database
         for date, row in historical_data.iterrows():
             open_price = row['Open']
             close_price = row['Close']
@@ -87,11 +82,9 @@ def post_stock_data(stock_id, ticker, period):
             cursor.execute(query, values)
             print(f"Data inserted for {ticker} on {date.strftime('%Y-%m-%d')}")
 
-        # Commit the transaction
         conn.commit()
         print(f"Data insertion completed for ticker: {ticker}")
 
-        # Close the connection
         cursor.close()
         conn.close()
 
