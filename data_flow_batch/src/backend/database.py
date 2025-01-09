@@ -47,11 +47,6 @@ def post_stock_data(stock_id, ticker, period):
         cursor = conn.cursor()
 
         cursor.execute('SELECT id FROM stock.stocks WHERE ticker = %s;', (ticker,))
-        result = cursor.fetchone()
-
-        if not result:
-            print(f"Ticker '{ticker}' not found in the database.")
-            return
 
         stock = stock_id
         print(f"Fetching data for ticker: {ticker}, period: {period}")
