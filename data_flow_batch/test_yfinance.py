@@ -1,13 +1,13 @@
 import yfinance as yf
 
 # Define the ticker symbol
-ticker_symbol = "BTC"
+ticker_symbol = "AAPL"
 
 # Create a Ticker object
 ticker = yf.Ticker(ticker_symbol)
 
 # Fetch historical market data
-historical_data = ticker.history(period="5d")  # data for the last year
+historical_data = ticker.history(period="5y")  # data for the last year
 print("Historical Data:")
 print(historical_data)
 
