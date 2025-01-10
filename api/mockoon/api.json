@@ -11,13 +11,199 @@
     {
       "uuid": "f542efb2-fc47-4384-b26c-e9627a90025c",
       "type": "http",
-      "documentation": "",
+      "documentation": "Retrieves a list of all stocks.",
       "method": "get",
       "endpoint": "stocks",
       "responses": [
         {
           "uuid": "548ed8cd-1dc6-4f7f-a2ca-641e2f137698",
-          "body": "{}",
+          "body": "[ \r\n    {    \r\n        \"stock_id\": 1,    \r\n        \"ticker\": \"AAPL\",    \r\n        \"name\": \"Apple Inc.\",    \r\n        \"sector\": \"Technology\",    \r\n        \"industry\": \"Consumer Electronics\",    \r\n        \"currency\": \"USD\",    \r\n        \"created_at\": \"2024-01-01T00:00:00Z\" \r\n    },\r\n    {\r\n        \"stock_id\": 2,    \r\n        \"ticker\": \"MSFT\",    \r\n        \"name\": \"Microsoft Corp.\",    \r\n        \"sector\": \"Technology\",    \r\n        \"industry\": \"Software - Infrastructure\",    \r\n        \"currency\": \"USD\",    \r\n        \"created_at\": \"2024-01-01T00:00:00Z\" \r\n    }\r\n]",
+          "latency": 200,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "479b560c-dd34-4064-af8b-7c0b0f89b3ef",
+      "type": "http",
+      "documentation": "Creates a new stock record.",
+      "method": "post",
+      "endpoint": "stocks",
+      "responses": [
+        {
+          "uuid": "5f7d20f6-9b0f-404b-9015-b6ba70f29ce0",
+          "body": "{    \r\n   \"stock_id\": 1,    \r\n   \"ticker\": \"{{body 'ticker'}}\", \r\n    \"name\": \"{{body 'name'}}\",    \r\n    \"sector\": \"{{body 'sector'}}\",    \r\n    \"industry\": \"{{body 'industry'}}\",  \r\n    \"currency\": \"{{body 'currency'}}\",    \r\n    \"created_at\": \"{{body 'created_at'}}\"\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "31a1a00b-a2e0-4bf6-b166-2ee91f9d2e2d",
+      "type": "http",
+      "documentation": "Retrieves details of a specific stock by stock_id.",
+      "method": "get",
+      "endpoint": "stocks/:id",
+      "responses": [
+        {
+          "uuid": "bb3ac8e9-c62b-4e5a-a708-236bcc2002bc",
+          "body": "{\r\n  \"stock_id\": {{urlParam 'id'}},\r\n  \"ticker\": \"AAPL\",\r\n  \"name\": \"Apple Inc.\",\r\n  \"sector\": \"Technology\",\r\n  \"industry\": \"Consumer Electronics\",\r\n  \"currency\": \"USD\",\r\n  \"created_at\": \"2024-01-01T00:00:00Z\"\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "c0239eb4-981c-4cc3-aff5-9b58b7fcfaae",
+      "type": "http",
+      "documentation": "Retrieves stock data for a specific stock (stock_id) within an optional date range.",
+      "method": "get",
+      "endpoint": "stocks/:id/data",
+      "responses": [
+        {
+          "uuid": "375c0155-aa6f-4190-9b5b-30c6c826dfed",
+          "body": "[\r\n  {\r\n    \"data_id\": 1,\r\n    \"stock_id\": 1,\r\n    \"date\": \"2024-01-01\",\r\n    \"open_price\": 150.25,\r\n    \"close_price\": 155.30,\r\n    \"high_price\": 157.00,\r\n    \"low_price\": 148.80,\r\n    \"volume\": 1200000,\r\n    \"created_at\": \"2024-01-01T00:00:00Z\"\r\n  },\r\n  {\r\n    \"data_id\": 2,\r\n    \"stock_id\": 1,\r\n    \"date\": \"2024-01-02\",\r\n    \"open_price\": 155.50,\r\n    \"close_price\": 158.00,\r\n    \"high_price\": 160.00,\r\n    \"low_price\": 154.00,\r\n    \"volume\": 1100000,\r\n    \"created_at\": \"2024-01-02T00:00:00Z\"\r\n  }\r\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "3edef4e9-8d77-4993-adc6-c0e1133cb192",
+      "type": "http",
+      "documentation": "Creates a new user.",
+      "method": "post",
+      "endpoint": "users",
+      "responses": [
+        {
+          "uuid": "c116a63c-a257-4c0f-bf4b-32ca5c8905fe",
+          "body": "{\r\n  \"user_id\": 1,\r\n  \"username\": \"{{body 'username'}}\", \r\n  \"email\": \"{{body 'email'}}\", \r\n  \"access_key\": \"{{body 'access_key'}}\",\r\n  \"created_at\": \"2024-01-01T00:00:00Z\"\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "acc47567-51ad-4c97-ad75-fa21171e03e4",
+      "type": "http",
+      "documentation": "Retrieves details of a specific user by user_id.",
+      "method": "get",
+      "endpoint": "users/:id",
+      "responses": [
+        {
+          "uuid": "564935fa-e7b7-4b91-ab31-a1d1342a6d11",
+          "body": "{\r\n  \"user_id\": 1,\r\n  \"username\": \"Lorenzo Uriel\",\r\n  \"email\": \"lorenzo.uriel@example.com\",\r\n  \"access_key\": \"ef819ce1-2005-4e2d-b95e-8dd41bd215db\",\r\n  \"created_at\": \"2024-01-01T00:00:00Z\"\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "196ea6e4-52ba-4127-a1ed-214402c21c24",
+      "type": "http",
+      "documentation": "Allows a user to select one or more stocks.",
+      "method": "get",
+      "endpoint": "users/:id/selections",
+      "responses": [
+        {
+          "uuid": "78e684b3-747e-4d22-a7a7-b054eec331e0",
+          "body": "[\r\n  {\r\n    \"selection_id\": 1,\r\n    \"user_id\": 1,\r\n    \"stock_id\": 1,\r\n    \"stock_name\": \"AAPL\",\r\n    \"selected_at\": \"2024-01-01T00:00:00Z\",\r\n    \"created_at\": \"2024-01-01T00:00:00Z\"\r\n  },\r\n  {\r\n    \"selection_id\": 2,\r\n    \"user_id\": 1,\r\n    \"stock_id\": 2,\r\n    \"stock_name\": \"MSFT\",\r\n    \"selected_at\": \"2024-01-01T00:01:00Z\",\r\n    \"created_at\": \"2024-01-01T00:01:00Z\"\r\n  },\r\n  {\r\n    \"selection_id\": 3,\r\n    \"user_id\": 1,\r\n    \"stock_id\": 3,\r\n    \"stock_name\": \"GOOGL\",\r\n    \"selected_at\": \"2024-01-01T00:02:00Z\",\r\n    \"created_at\": \"2024-01-01T00:02:00Z\"\r\n  }\r\n]",
           "latency": 0,
           "statusCode": 200,
           "label": "",
@@ -44,6 +230,30 @@
     {
       "type": "route",
       "uuid": "f542efb2-fc47-4384-b26c-e9627a90025c"
+    },
+    {
+      "type": "route",
+      "uuid": "479b560c-dd34-4064-af8b-7c0b0f89b3ef"
+    },
+    {
+      "type": "route",
+      "uuid": "31a1a00b-a2e0-4bf6-b166-2ee91f9d2e2d"
+    },
+    {
+      "type": "route",
+      "uuid": "c0239eb4-981c-4cc3-aff5-9b58b7fcfaae"
+    },
+    {
+      "type": "route",
+      "uuid": "3edef4e9-8d77-4993-adc6-c0e1133cb192"
+    },
+    {
+      "type": "route",
+      "uuid": "acc47567-51ad-4c97-ad75-fa21171e03e4"
+    },
+    {
+      "type": "route",
+      "uuid": "196ea6e4-52ba-4127-a1ed-214402c21c24"
     }
   ],
   "proxyMode": false,
