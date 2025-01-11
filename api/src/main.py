@@ -1,7 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from models.stocks import StockCreate, Stock, StockListResponse, StockData
+from models.users import User, UserResponse, UserSelectionRequest, UserSelectionResponse
 from db.stocks import fetch_stocks_from_db, insert_stock_to_db, fetch_stock_by_id, fetch_stock_data_by_id
+from db.users import create_user_in_db, fetch_user_by_id, create_user_selections
 from typing import List, Optional
+from datetime import datetime
 
 app = FastAPI()
 
@@ -38,3 +41,37 @@ async def get_stock_data(id: int, start_date: Optional[str] = None, end_date: Op
         return stock_data
     else:
         raise HTTPException(status_code=404, detail="Stock data not found")
+    
+@app.post("/users")
+def create_user(user: User):
+    try:
+        # Insert the new user into the database
+        created_at = datetime.utcnow()
+        user_id = create_user_in_db(user.username, user.email, user.access_key, created_at)
+
+        # Return the created user record
+        return {
+            "user_id": user_id,
+            "username": user.username,
+            "email": user.email,
+            "access_key": user.access_key,
+            "created_at": created_at.isoformat()
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+@app.get("/users/{id}", response_model=UserResponse)
+async def get_user(id: int):
+    user = fetch_user_by_id(id)
+    if user:
+        return user
+    else:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+@app.post("/users/{id}/selections", response_model=List[UserSelectionResponse])
+async def select_stocks_for_user(id: int, selection_request: UserSelectionRequest):
+    try:
+        selections = create_user_selections(id, selection_request.stock_ids)
+        return selections
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error creating selections: {e}")
