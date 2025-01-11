@@ -47,7 +47,7 @@ def fetch_user_by_id(user_id: int):
                 "access_key": row["access_key"],
                 "created_at": row["created_at"].isoformat() if row["created_at"] else None
             }
-        return None  # If no user found
+        return None 
 
     except mysql.connector.Error as e:
         raise Exception(f"Error fetching user: {e}")

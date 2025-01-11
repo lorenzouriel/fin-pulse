@@ -45,11 +45,9 @@ async def get_stock_data(id: int, start_date: Optional[str] = None, end_date: Op
 @app.post("/users")
 def create_user(user: User):
     try:
-        # Insert the new user into the database
         created_at = datetime.utcnow()
         user_id = create_user_in_db(user.username, user.email, user.access_key, created_at)
 
-        # Return the created user record
         return {
             "user_id": user_id,
             "username": user.username,

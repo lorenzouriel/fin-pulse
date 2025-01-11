@@ -92,7 +92,7 @@ def fetch_stock_by_id(stock_id: int) -> Stock:
             FROM stock.stocks WHERE id = %s
         """
         cursor.execute(query, (stock_id,))
-        row = cursor.fetchone()  # Fetch one record by stock_id
+        row = cursor.fetchone() 
         
         if row:
             created_at_str = row["created_at"].strftime("%Y-%m-%d %H:%M:%S") if row["created_at"] else None
