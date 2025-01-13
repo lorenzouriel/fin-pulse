@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from models.stocks import StockCreate, Stock, StockListResponse, StockData
 from models.users import User, UserResponse, UserSelectionRequest, UserSelectionResponse
 from db.stocks import fetch_stocks_from_db, insert_stock_to_db, fetch_stock_by_id, fetch_stock_data_by_id
-from db.users import create_user_in_db, fetch_user_by_id, create_user_selections
+from db.users import create_user_in_db, create_user_selections, fetch_user_by_email
 from typing import List, Optional
 from datetime import datetime
 
@@ -58,9 +58,12 @@ def create_user(user: User):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-@app.get("/users/{id}", response_model=UserResponse)
-async def get_user(id: int):
-    user = fetch_user_by_id(id)
+@app.get("/users/{email}", response_model=UserResponse)
+async def get_user_email(email: str):
+    """
+    Fetch user details by email.
+    """
+    user = fetch_user_by_email(email)
     if user:
         return user
     else:

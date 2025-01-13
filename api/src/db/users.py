@@ -25,7 +25,10 @@ def create_user_in_db(username: str, email: str, access_key: str, created_at: da
         if connection:
             connection.close()
 
-def fetch_user_by_id(user_id: int):
+def fetch_user_by_email(email: str):
+    """
+    Query the database for a user with the given email.
+    """
     connection = None
     try:
         connection = get_db_connection()
@@ -34,9 +37,9 @@ def fetch_user_by_id(user_id: int):
         query = """
             SELECT id, username, email, access_key, created_at
             FROM stock.users
-            WHERE id = %s
+            WHERE email = %s
         """
-        cursor.execute(query, (user_id,))
+        cursor.execute(query, (email,))
         row = cursor.fetchone()
 
         if row:
@@ -47,7 +50,7 @@ def fetch_user_by_id(user_id: int):
                 "access_key": row["access_key"],
                 "created_at": row["created_at"].isoformat() if row["created_at"] else None
             }
-        return None 
+        return None
 
     except mysql.connector.Error as e:
         raise Exception(f"Error fetching user: {e}")
