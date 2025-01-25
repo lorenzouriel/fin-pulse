@@ -1,18 +1,19 @@
 import requests
-import json
 
 API_URL = "http://localhost:8000"
 
 def get_user_by_email(email):
     url = f"{API_URL}/users/{email}"
 
-    response = requests.get(url)
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {"message": "User not found"}
+    except requests.exceptions.RequestException as e:
+        return {"message": f"Error connecting to the API: {e}"}
 
-    if response.status_code == 200:
-        user = response.json()
-        return user
-    else:
-        return {"message": "User not found"}
 
 def create_selection(user_id, stock_id):
     url = f"{API_URL}/users/{user_id}/selections"
