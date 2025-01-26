@@ -1,6 +1,10 @@
 import requests
+import os
+from dotenv import load_dotenv
 
-API_URL = "http://localhost:8000"
+load_dotenv()
+
+API_URL = os.getenv('API_URL')
 
 def get_user_by_email(email):
     url = f"{API_URL}/users/{email}"
@@ -15,17 +19,23 @@ def get_user_by_email(email):
         return {"message": f"Error connecting to the API: {e}"}
 
 
-def create_selection(user_id, stock_id):
-    url = f"{API_URL}/users/{user_id}/selections"
+def create_user(username, email, access_key):
+    """
+    Function to create a user using the API.
+    """
 
-    data = {
-        "stock_ids": stock_id
+    url = f"{API_URL}/users"
+
+    payload = {
+        "username": username,
+        "email": email,
+        "access_key": access_key
     }
-
-    response = requests.post(url, json=data)
-
-    if response.status_code == 201:
-        selections = response.json()
-        return selections
-    else:
-        return {"message": "Selection not created"}
+    try:
+        response = requests.post(url, json=payload)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            return {"error": response.json().get("message", "Unknown error occurred.")}
+    except Exception as e:
+        return {"error": str(e)}

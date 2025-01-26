@@ -1,7 +1,11 @@
 import requests
 from datetime import datetime
+import os
+from dotenv import load_dotenv
 
-API_URL = "http://localhost:8000"
+load_dotenv()
+
+API_URL = os.getenv('API_URL')
 
 def get_stocks():
     try:
