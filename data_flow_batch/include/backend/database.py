@@ -47,6 +47,7 @@ def post_stock_data(stock_id, ticker, period):
         cursor = conn.cursor()
 
         cursor.execute('SELECT id FROM stock.stocks WHERE ticker = %s;', (ticker,))
+        cursor.fetchall()
 
         stock = stock_id
         print(f"Fetching data for ticker: {ticker}, period: {period}")
