@@ -14,12 +14,12 @@ def stocks_data():
 
     @task(task_id='load_stock_historical')
     def task_load_stock_historical():
-        load_stock_historical()  # Now correctly calling the function
+        load_stock_historical() 
         return "Historical Data Loaded"
 
     @task(task_id='load_stock_daily')
     def task_load_stock_daily():
-        load_stock_daily()  # Now correctly calling the function
+        load_stock_daily() 
         return "Daily Data Loaded"
     
     t1 = task_load_stock_historical()
