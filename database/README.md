@@ -24,12 +24,12 @@ O projeto utiliza as seguintes tecnologias:
 
 1. Clone o repositório:
 ```sh
-git clone https://github.com/lorenzouriel/project-python-stock-analysis.git
+git clone https://github.com/lorenzouriel/fin-pulse.git
 ```
 
 2. Navegue para o diretório do projeto:
 ```sh
-cd project-python-stock-analysis
+cd fin-pulse/database
 ```
 
 3. Execute o banco de dados utilizando Docker:
@@ -49,15 +49,12 @@ Informe a senha `stock_password` quando solicitado.
 docker exec -i container_mysql mysql -u stock_user -pstock_password stock < database/backup/data.sql
 ```
 
-Se houver configurações extras necessárias, inclua aqui.
-
 ## 4. Arquitetura
 
 ### Estrutura
 O projeto está organizado da seguinte forma:
-
-```
-project-python-stock-analysis/
+```sh
+fin-pulse/
 ├── database/
 │   ├── backup/          # Arquivos de backup do banco de dados
 │   │   └── data.sql     # Dump inicial do banco
@@ -74,3 +71,83 @@ project-python-stock-analysis/
 3. O banco fica acessível na porta `3306` do host, permitindo conexões externas.
 4. Backups podem ser armazenados e restaurados utilizando a pasta `backup/`.
 5. O banco armazena informações sobre ações, incluindo histórico de preços, volume de negociações e dados financeiros relevantes.
+
+<div style="text-align: center; font-size: 24px;">
+  . . . 
+</div>
+
+
+# Database `stock` documentation
+
+## 1. Description
+
+### Objective
+The **Database** project aims to provide an organized structure for storing **stocks** data, including backups, documentation and definition of database tables.
+
+- **Problem solved:** Centralizes and organizes stock values ​​and information.
+- **Target audience:** Financial analysis teams, investors and portfolio management systems.
+- **Related area:** Financial sectors, stock brokers and investment platforms.
+
+## 2. Technologies Used
+
+The project uses the following technologies:
+
+| Component | Technology | Version |
+|-------------|-----------|---------|
+| Database | MySQL | 8.0 |
+| Management | Docker | Latest |
+
+## 3. Installation
+
+### Installation Steps
+
+1. Clone the repository:
+```sh
+git clone https://github.com/lorenzouriel/fin-pulse.git
+```
+
+2. Navigate to the project directory:
+```sh
+cd fin-pulse/database
+```
+
+3. Run the database using Docker:
+```sh
+docker-compose up -d
+```
+
+4. To access the database, use:
+```sh
+mysql -h 127.0.0.1 -P 3306 -u stock_user -p
+```
+
+Enter the password `stock_password` when prompted.
+
+5. To restore a backup manually, use:
+```sh
+docker exec -i container_mysql mysql -u stock_user -pstock_password stock < database/backup/data.sql
+```
+
+## 4. Architecture
+
+### Structure
+The project is organized as follows:
+
+```sh
+fin-pulse/
+├── database/
+│ ├── backup/ # Database backup files
+│ │ └── data.sql # Initial database dump
+│ ├── docs/ # Bank documentation
+│ ├── tables/ # Definition of stock tables and value history
+├── docker-compose.yaml # Docker configuration file
+├── README.md # Main documentation
+```
+
+### Execution Flow
+
+1. **Docker Compose** starts a MySQL container with the credentials and structure defined in `docker-compose.yaml`.
+2. If a `data.sql` file is present, it is automatically loaded at startup.
+3. The bank is accessible on port `3306` on the host, allowing external connections.
+4. Backups can be stored and restored using the `backup/` folder.
+5. The bank stores information about stocks, including price history, trading volume and relevant financial data.
