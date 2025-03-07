@@ -17,6 +17,7 @@ O projeto utiliza as seguintes tecnologias:
 |-------------------|------------------------|------------------|
 | Backend           | FastAPI + Uvicorn      | 0.115.6 + 0.34.0 |
 | Banco de Dados    | MySQL                  | 8+               |
+| Linguagem         | Python                 | 3.12             |
 | Contêinerização   | Docker                 | latest           |
 | Contrato de Dados | Pydantic               | 2.10.5           |
 | ORM               | Mysql Connector        | 9.1.0            |
@@ -113,6 +114,7 @@ The project uses the following technologies:
 | Component         | Technology        | Version          |
 |-------------------|-------------------|------------------|
 | Backend           | FastAPI + Uvicorn | 0.115.6 + 0.34.0 |
+| Language          | Python            | 3.12             |
 | Database          | MySQL             | 8+               |
 | Containerization  | Docker            | latest           |
 | Data Contract     | Pydantic          | 2.10.5           |
