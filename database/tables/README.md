@@ -1,3 +1,93 @@
+# Visão Geral da Estrutura do Banco de Dados
+
+Este documento fornece uma visão geral concisa da estrutura do banco de dados projetado para gerenciar dados do mercado de ações. O esquema compreende várias tabelas, cada uma servindo a um propósito específico no armazenamento e organização de informações relevantes.
+
+### Tabelas e objetivos
+
+| Nome da tabela | Objetivo |
+|------------------------|---------------------------------------------------------------------------|
+| **Stocks**  | Armazena informações sobre ações individuais, incluindo seus identificadores, nomes, setores e moeda de negociação. |
+| **Stock Data** | Contém dados diários de negociação de ações, incluindo preços de abertura e fechamento, volume e data dos dados. |
+| **Stock Performance**  | Registra métricas de desempenho para ações ao longo do tempo, como variação percentual e médias móveis. |
+| **User Selections** | Rastreia ações selecionadas pelo usuário para monitoramento ou análise personalizada. |
+| **Users** | Gerencia informações do usuário, incluindo nomes de usuário, e-mails e chaves de acesso. |
+| **User Activity Logs** | Registra ações do usuário dentro do aplicativo para fins de rastreamento e auditoria. |
+| **Watchlists**  | Permite que os usuários criem listas personalizadas de ações que desejam monitorar de perto. |
+
+### ERD
+![erd-dark](/database/docs/erd_black.png)
+
+## [dbdiagram.io](https://dbdiagram.io/d)
+```sql
+Tabela stocks {
+stock_id int [pk, increment] // Identificador exclusivo para o ticker
+de ações varchar(10) // Código do ativo (por exemplo, AAPL, TSLA)
+name varchar(100) // Nome completo da empresa
+sector varchar(100) // Setor da empresa (por exemplo, Tecnologia)
+industry varchar(100) // Setor da empresa (por exemplo, Semicondutores)
+currency varchar(10) // Moeda de negociação (por exemplo, USD)
+created_at timestamp // Data de criação do registro
+}
+
+Tabela stock_data {
+data_id int [pk, increment] // Identificador exclusivo para os dados
+stock_id int [ref: > stocks.stock_id] // Chave estrangeira para o stocks table
+date date // Data da cotação
+open_price decimal(10,2) // Preço de abertura da ação
+close_price decimal(10,2) // Preço de fechamento da ação
+high_price decimal(10,2) // Preço mais alto da ação no dia
+low_price decimal(10,2) // Preço mais baixo da ação no dia
+volume bigint // Volume de negociação da ação
+created_at timestamp // Data de criação do registro
+}
+
+Tabela user_selections {
+selection_id int [pk, increment] // Identificador exclusivo para a seleção
+user_id int // Chave estrangeira para a tabela users
+stock_id int [ref: > stocks.stock_id] // Chave estrangeira para a tabela stocks
+selected_at timestamp // Data e hora da seleção
+created_at timestamp // Data de criação do registro
+}
+
+Tabela users {
+user_id int [pk, increment] // Identificador exclusivo para o usuário
+username varchar(100) // Nome de usuário
+email varchar(100) // Usuário email
+access_key varchar(100) // Chave de acesso
+created_at timestamp // Data de criação do registro
+}
+
+Tabela stock_performance {
+performance_id int [pk, increment] // Identificador exclusivo para desempenho
+stock_id int [ref: > stocks.stock_id] // Relação com a tabela stocks
+date date // Data da análise de desempenho
+percent_change decimal(5,2) // Alteração percentual do ativo
+moving_avg decimal(10,2) // Média móvel calculada
+created_at timestamp // Data de criação do registro
+}
+
+Tabela watchlists {
+watchlist_id int [pk, increment] // Identificador exclusivo para a lista
+user_id int [ref: > users.user_id] // Relação com a tabela users
+name varchar(100) // Nome da watchlist
+created_at timestamp // Data de criação do registro
+}
+
+Tabela user_activity_logs {
+log_id int [pk, increment] // Identificador exclusivo para o log
+user_id int [ref: > users.user_id] // Relacionamento com a tabela de usuários
+action varchar(100) // Descrição da ação realizada
+timestamp timestamp // Data e hora da ação
+created_at timestamp // Data de criação do registro
+}
+```
+
+
+<div style="text-align: center; font-size: 24px;">
+  . . . 
+</div>
+
+
 # Database Schema Overview
 
 This document provides a concise overview of the database schema designed for managing stock market data. The schema comprises several tables, each serving a specific purpose in storing and organizing relevant information.

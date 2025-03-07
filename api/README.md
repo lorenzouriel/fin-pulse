@@ -5,22 +5,21 @@
 ### Objetivo
 A API foi desenvolvida para fornecer uma maneira eficiente de gerenciar informações de ações de empresas, como seus detalhes e dados financeiros. A API permite criar registros de ações, recuperar informações detalhadas sobre as ações existentes, acessar dados históricos de preços e volume, além de gerenciar as seleções de ações feitas por usuários.
 
-- **Problema resolvido**: Ela facilita o acesso a dados essenciais sobre as ações de uma empresa, como o preço de abertura e fechamento, volume de transações e variações de preços.
-- **Público-alvo**: 
-    - Analistas financeiros que precisam coletar dados históricos e atuais para análise de mercado.
-    - Desenvolvedores que desejam integrar essas funcionalidades de gerenciamento e consulta de ações em seus próprios sistemas financeiros.
-- **Área relacionada**: 
-    - Tecnologia de Dados para análises e manipulação de grandes volumes de informações financeiras.
-    - Desenvolvimento de Software para integração com sistemas financeiros de terceiros que exigem dados financeiros precisos e em tempo real.
+Ela facilita o acesso a dados essenciais sobre as ações de uma empresa, como o preço de abertura e fechamento, volume de transações e variações de preços.
+
+Desenvolvida para analistas financeiros que precisam coletar dados históricos e atuais para análise de mercado e desenvolvedores que desejam integrar essas funcionalidades de gerenciamento e consulta de ações em seus próprios sistemas financeiros.
+
 
 ## 2. Tecnologias Utilizadas
 O projeto utiliza as seguintes tecnologias:
 
-| Componente       | Tecnologia   | Versão  |
-|------------------|--------------|---------|
-| Backend          | FastAPI      | 0.115.6 |
-| Banco de Dados   | MySQL        | 8+      |
-| Docker           | Docker       | 20.10+  |
+| Componente        | Tecnologia             | Versão           |
+|-------------------|------------------------|------------------|
+| Backend           | FastAPI + Uvicorn      | 0.115.6 + 0.34.0 |
+| Banco de Dados    | MySQL                  | 8+               |
+| Contêinerização   | Docker                 | latest           |
+| Contrato de Dados | Pydantic               | 2.10.5           |
+| ORM               | Mysql Connector        | 9.1.0            |
 
 ## 3. Instalação
 
@@ -72,20 +71,20 @@ docker run -p 8000:8000 api
 ### Estrutura
 O projeto está organizado da seguinte forma:
 ```sh
-projeto/
-├── mockoon/             # Projeto criado no Mockoon para simulação de API
-├── src/                 # Código-fonte da API
-│   ├── db/              # Conexões com o banco de dados e queries para os endpoints
-│   ├── models/          # Criação dos contratos de dados com Pydantic
-│   ├── Dockerfile       # Docker para rodar a API
-│   ├── requirements.txt     # Dependências do projeto
-│   ├── .env                 # Variáveis de ambiente
-│   └── main.py          # Arquivo principal da aplicação FastAPI
-└── README.md            # Documentação principal
+api/
+├── mockoon/              # Projeto criado no Mockoon para simulação de API
+├── src/                  # Código-fonte da API
+│   ├── db/               # Conexões com o banco de dados e queries para os endpoints
+│   ├── models/           # Criação dos contratos de dados com Pydantic
+│   ├── Dockerfile        # Conteinerização API
+│   ├── requirements.txt  # Dependências do projeto
+│   ├── .env              # Variáveis de ambiente
+│   ├── README.md         # Documentação dos endpoints
+│   └── main.py           # Arquivo principal da aplicação FastAPI
+└── README.md             # Documentação principal
 ```
 
 ### Fluxo de Execução
-Descreva o fluxo principal da API, incluindo interações entre os componentes:
 1. O FastAPI é iniciado no arquivo `src.main` utilizando o comando `uvicorn`, expondo a API no endpoint `localhost:8000`.
 2. As conexões com o banco de dados e as queries são gerenciadas pela pasta `src/db/`, onde as interações com o banco são definidas.
 3. Os contratos de dados são definidos utilizando Pydantic na pasta `src/models/`, onde os dados recebidos ou enviados pela API são validados.
@@ -101,25 +100,23 @@ Descreva o fluxo principal da API, incluindo interações entre os componentes:
 
 ## 1. Description
 
-###Objective
-An API was developed to provide an efficient way to manage company stock information, such as its details and financial data. The API allows you to create stock records, retrieve planned information about existing stocks, access historical price and volume data, and manage stock choices made by users.
+### Objective
+The API is designed to provide an efficient way to manage company stock information, such as stock details and financial data. The API allows you to create stock records, retrieve detailed information about existing stocks, access historical price and volume data, and manage user stock selections.
 
-- **Problem solved**: It facilitates access to essential data about a company's shares, such as opening and closing prices, transaction volume and price variations.
-- **Target audience**: 
-    - Financial analysts who need to collect historical and current data for market analysis.
-    - Developers who want to integrate these share management and consultation functionalities into their own financial systems.
-- **Related area**: 
-    - Data Technology for analysis and manipulation of large volumes of financial information.
-    - Software development for integration with third-party financial systems that exclude accurate and real-time financial data.
+It facilitates access to essential data about a company's stocks, such as opening and closing prices, trading volume, and price changes.
+
+Designed for financial analysts who need to collect historical and current data for market analysis, and developers who want to integrate these stock management and query functionalities into their own financial systems.
 
 ## 2. Technologies Used
 The project uses the following technologies:
 
-| Component | Technology | Version |
-|------------------|-------------|---------|
-| Backend | Quick API | 0.115.6 |
-| Database | MySQL | 8+ |
-| Docker | Docker | 20.10+ |
+| Component         | Technology        | Version          |
+|-------------------|-------------------|------------------|
+| Backend           | FastAPI + Uvicorn | 0.115.6 + 0.34.0 |
+| Database          | MySQL             | 8+               |
+| Containerization  | Docker            | latest           |
+| Data Contract     | Pydantic          | 2.10.5           |
+| ORM               | Mysql Connector   | 9.1.0            |
 
 ## 3. Installation
 
@@ -170,20 +167,20 @@ docker build -t api . docker run -p 8000:8000 api
 ### Structure
 The project is organized as follows:
 ```sh
-project/
-├── mockoon/ # Project created in Mockoon for API simulation
-├── src/ # API source code
-│ ├── db/ # Database connections and queries for endpoints
-│ ├── models/ # Creation of data contracts with Pydantic
-│ ├── Dockerfile # Docker to run the API
-│ ├── requirements.txt # Project dependencies
-│ ├── .env # Environment variables
-│ └── main.py # Main file of the FastAPI application
-└── README.md # Main documentation
+api/
+├── mockoon/            # Project created in Mockoon for API simulation
+├── src/                # API source code
+│   ├── db/               # Database connections and queries for endpoints
+│   ├── models/           # Creation of data contracts with Pydantic
+│   ├── Dockerfile        # Docker to run the API
+│   ├── requirements.txt  # Project dependencies
+│   ├── .env              # Environment variables
+│   ├── README.md         # Endpoints documentation
+│   └── main.py           # Main file of the FastAPI application
+└── README.md           # Main documentation
 ```
 
 ### Execution Flow
-Describe the main flow of the API, including interactions between components:
 1. FastAPI is started in the `src.main` file using the `uvicorn` command, exposing the API at the `localhost:8000` endpoint.
 2. Database connections and queries are managed by the `src/db/` folder, where interactions with the database are defined.
 3. Data contracts are defined using Pydantic in the `src/models/` folder, where data received or sent by the API is validated.

@@ -5,18 +5,17 @@
 ### Objetivo
 O projeto **Database** tem como objetivo fornecer uma estrutura organizada para armazenamento de dados de **stocks (ações)**, incluindo backups, documentação e definição das tabelas do banco de dados.
 
-- **Problema resolvido:** Centraliza e organiza os valores e informações de ações.
-- **Público-alvo:** Equipes de análise financeira, investidores e sistemas de gestão de portfólio.
-- **Área relacionada:** Setores financeiros, corretoras de valores e plataformas de investimentos.
+entraliza e organiza os valores e informações de ações. 
+
+O projeto foi criado para equipes de análise financeira, investidores e sistemas de gestão de portfólio.
 
 ## 2. Tecnologias Utilizadas
-
 O projeto utiliza as seguintes tecnologias:
 
-| Componente   | Tecnologia | Versão  |
-|-------------|-----------|---------|
+| Componente     | Tecnologia | Versão  |
+|----------------|------------|---------|
 | Banco de Dados | MySQL      | 8.0     |
-| Gerenciamento | Docker     | Latest  |
+| Contêinerização| Docker     | Latest  |
 
 ## 3. Instalação
 
@@ -48,6 +47,7 @@ Informe a senha `stock_password` quando solicitado.
 ```sh
 docker exec -i container_mysql mysql -u stock_user -pstock_password stock < database/backup/data.sql
 ```
+- O comando `docker-compose up -d` já realiza essa restauração do backup.
 
 ## 4. Arquitetura
 
@@ -58,8 +58,8 @@ fin-pulse/
 ├── database/
 │   ├── backup/          # Arquivos de backup do banco de dados
 │   │   └── data.sql     # Dump inicial do banco
-│   ├── docs/            # Documentação do banco
-│   ├── tables/          # Definição das tabelas de ações e histórico de valores
+│   ├── docs/            # Documentação ERD
+│   ├── tables/          # Query das tabelas e documentação complementar
 ├── docker-compose.yaml  # Arquivo de configuração do Docker
 ├── README.md            # Documentação principal
 ```
@@ -82,20 +82,20 @@ fin-pulse/
 ## 1. Description
 
 ### Objective
-The **Database** project aims to provide an organized structure for storing **stocks** data, including backups, documentation and definition of database tables.
+The **Database** project aims to provide an organized structure for storing **stock** data, including backups, documentation, and definition of database tables.
 
-- **Problem solved:** Centralizes and organizes stock values ​​and information.
-- **Target audience:** Financial analysis teams, investors and portfolio management systems.
-- **Related area:** Financial sectors, stock brokers and investment platforms.
+It internalizes and organizes stock values ​​and information.
+
+The project was created for financial analysis teams, investors, and portfolio management systems.
 
 ## 2. Technologies Used
 
 The project uses the following technologies:
 
-| Component | Technology | Version |
-|-------------|-----------|---------|
-| Database | MySQL | 8.0 |
-| Management | Docker | Latest |
+| Component        | Technology | Version |
+|------------------|------------|---------|
+| Database         | MySQL      | 8.0     |
+| Containerization | Docker     | Latest  |
 
 ## 3. Installation
 
@@ -136,12 +136,12 @@ The project is organized as follows:
 ```sh
 fin-pulse/
 ├── database/
-│ ├── backup/ # Database backup files
-│ │ └── data.sql # Initial database dump
-│ ├── docs/ # Bank documentation
-│ ├── tables/ # Definition of stock tables and value history
+│ ├── backup/           # Database backup files
+│ │ └── data.sql        # Initial database dump
+│ ├── docs/             # ERD documentation
+│ ├── tables/           # Table queries and additional documentation
 ├── docker-compose.yaml # Docker configuration file
-├── README.md # Main documentation
+├── README.md           # Main documentation
 ```
 
 ### Execution Flow
