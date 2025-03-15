@@ -1,0 +1,13 @@
+[project]
+name = "data-flow-batch"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "apache-airflow>=2.10.4",
+    "mysql-connector-python>=9.1.0",
+    "pyodbc>=5.2.0",
+    "python-dotenv>=1.0.1",
+    "yfinance>=0.2.51",
+]
