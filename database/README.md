@@ -1,153 +1,120 @@
-# Database `stock` documentation
+# Database Schema Overview
 
-## 1. Description
+This document provides a concise overview of the database schema designed for managing stock market data, cryptocurrency tracking, **currency exchange**, and **personal expense management**. The schema is structured to support a financial AI agent that helps users monitor investments and track spending.
 
-### Objective
-The **Database** project aims to provide an organized structure for storing **stock** data, including backups, documentation, and definition of database tables.
+### Tables and Objectives
 
-It internalizes and organizes stock values ​​and information.
+| Table Name             | Objective                                                                             |
+| ---------------------- | ------------------------------------------------------------------------------------- |
+| **Stocks**             | Stores information about individual stocks, including ticker, sector, and currency.   |
+| **Stock Data**         | Contains historical price and volume data for stocks.                                 |
+| **Cryptocurrencies**   | Stores information about cryptocurrencies, including symbol, platform, and algorithm. |
+| **Crypto Data**        | Holds historical pricing and volume data for cryptocurrencies.                        |
+| **Currencies**         | Stores fiat currency data including symbol and country.                               |
+| **Currency Rates**     | Maintains historical exchange rates between currencies.                               |
+| **User Selections**    | Tracks user-selected assets: stocks, cryptocurrencies, and currencies.                |
+| **Users**              | Manages user credentials and identification.                                          |
+| **Expenses**           | Stores financial transactions made by users.                                          |
+| **Expense Categories** | Organizes expenses into logical categories (e.g., Food, Transport).                   |
 
-The project was created for financial analysis teams, investors, and portfolio management systems.
+---
 
-## 2. Technologies Used
+## [dbdiagram.io](https://dbdiagram.io/d)
 
-The project uses the following technologies:
+```sql
+Table stocks {
+  id int [pk, increment] // Unique identifier for the stock
+  ticker varchar(10) // Asset code (e.g., AAPL, TSLA)
+  name varchar(100) // Full company name
+  sector varchar(100) // Company sector (e.g., Technology)
+  industry varchar(100) // Company industry (e.g., Semiconductors)
+  currency varchar(10) // Trading currency (e.g., USD)
+  created_at timestamp // Record creation date
+}
 
-| Component        | Technology | Version |
-|------------------|------------|---------|
-| Database         | MySQL      | 8.0     |
-| Containerization | Docker     | Latest  |
+Table stock_data {
+  id int [pk, increment] // Unique identifier for the data
+  stock_id int [ref: > stocks.id] // Foreign key to the stocks table
+  date date // Quote date
+  open_price decimal(10,2) // Opening price of the stock
+  close_price decimal(10,2) // Closing price of the stock
+  high_price decimal(10,2) // Highest price of the stock for the day
+  low_price decimal(10,2) // Lowest price of the stock for the day
+  volume bigint // Trading volume of the stock
+  created_at timestamp // Record creation date
+}
 
-## 3. Installation
+Table cryptocurrencies {
+  id int [pk, increment] // Unique identifier for the cryptocurrency
+  symbol varchar(10) // Symbol of the cryptocurrency (e.g., BTC, ETH)
+  name varchar(100) // Full name of the cryptocurrency
+  algorithm varchar(50) // Mining algorithm or consensus mechanism (e.g., PoW, PoS)
+  platform varchar(100) // Blockchain platform (e.g., Ethereum, Binance Smart Chain)
+  created_at timestamp
+}
 
-### Installation Steps
+Table crypto_data {
+  id int [pk, increment] // Unique identifier for the data
+  crypto_id int [ref: > cryptocurrencies.id] // Foreign key to the cryptocurrencies table
+  date date // Quote date
+  open_price decimal(18,8) // Opening price
+  close_price decimal(18,8) // Closing price
+  high_price decimal(18,8) // Highest price for the day
+  low_price decimal(18,8) // Lowest price for the day
+  volume decimal(18,8) // Trading volume in base currency
+  created_at timestamp
+}
 
-1. Clone the repository:
-```sh
-git clone https://github.com/lorenzouriel/fin-pulse.git
+Table currencies {
+  currency_code varchar(10) [pk] // Currency code (e.g., USD, BRL, EUR)
+  name varchar(100) // Full currency name
+  symbol varchar(10) // Currency symbol (e.g., $, R$, €)
+  country varchar(100) // Country or region using the currency
+  created_at timestamp
+}
+
+Table currency_rates {
+  rate_id int [pk, increment] // Unique identifier for the exchange rate record
+  currency_code varchar(10) [ref: > currencies.currency_code] // Currency code being referenced
+  base_currency_code varchar(10) [ref: > currencies.currency_code] // Base currency code (e.g., USD)
+  date date // Date of the exchange rate
+  rate decimal(18,8) // Exchange rate (how much base currency equals one unit of currency_code)
+  created_at timestamp
+}
+
+Table user_selections {
+  id int [pk, increment] // Unique identifier for the selection
+  user_id int [ref: > users.id] // Foreign key to the users table
+  stock_id int [ref: > stocks.id, null] // Foreign key to stocks (nullable)
+  crypto_id int [ref: > cryptocurrencies.id, null] // Foreign key to cryptocurrencies (nullable)
+  currency_code varchar(10) [ref: > currencies.currency_code, null] // Foreign key to currencies (nullable)
+  selected_at timestamp // Selection date and time
+  created_at timestamp // Record creation date
+}
+
+Table users {
+  id int [pk, increment] // Unique identifier for the user
+  username varchar(100) // Username
+  email varchar(100) // User email
+  access_key varchar(100) // Access key
+  created_at timestamp // Record creation date
+}
+
+Table expenses {
+  id int [pk, increment] // Unique expense ID
+  user_id int [ref: > users.id] // Who made the expense
+  category_id int [ref: > expense_categories.id] // Expense category
+  payment_method varchar(30) // Payment method used
+  amount decimal(10,2) // Expense amount
+  currency varchar(10) // Currency of the transaction (e.g., USD, BRL)
+  description varchar(255) // Optional description
+  expense_date date // Date the expense occurred
+  created_at timestamp // When the record was created
+}
+
+Table expense_categories {
+  id int [pk, increment] // Category ID
+  name varchar(100) // Category name (e.g., Food, Transport)
+  created_at timestamp
+}
 ```
-
-2. Navigate to the project directory:
-```sh
-cd fin-pulse/database
-```
-
-3. Run the database using Docker:
-```sh
-docker-compose up -d
-```
-
-4. To access the database, use:
-```sh
-mysql -h 127.0.0.1 -P 3306 -u stock_user -p
-```
-
-Enter the password `stock_password` when prompted.
-
-5. To restore a backup manually, use:
-```sh
-docker exec -i container_mysql mysql -u stock_user -pstock_password stock < database/backup/data.sql
-```
-
-## 4. Architecture
-
-### Structure
-The project is organized as follows:
-
-```sh
-fin-pulse/
-├── database/
-│ ├── backup/           # Database backup files
-│ │ └── data.sql        # Initial database dump
-│ ├── docs/             # ERD documentation
-│ ├── tables/           # Table queries and additional documentation
-├── docker-compose.yaml # Docker configuration file
-├── README.md           # Main documentation
-```
-
-### Execution Flow
-
-1. **Docker Compose** starts a MySQL container with the credentials and structure defined in `docker-compose.yaml`.
-2. If a `data.sql` file is present, it is automatically loaded at startup.
-3. The bank is accessible on port `3306` on the host, allowing external connections.
-4. Backups can be stored and restored using the `backup/` folder.
-5. The bank stores information about stocks, including price history, trading volume and relevant financial data.
-
-<div style="text-align: center; font-size: 24px;">
-  . . . 
-</div>
-
-
-# Documentação do Database `stock`
-
-## 1. Descrição
-
-### Objetivo
-O projeto **Database** tem como objetivo fornecer uma estrutura organizada para armazenamento de dados de **stocks (ações)**, incluindo backups, documentação e definição das tabelas do banco de dados.
-
-entraliza e organiza os valores e informações de ações. 
-
-O projeto foi criado para equipes de análise financeira, investidores e sistemas de gestão de portfólio.
-
-## 2. Tecnologias Utilizadas
-O projeto utiliza as seguintes tecnologias:
-
-| Componente     | Tecnologia | Versão  |
-|----------------|------------|---------|
-| Banco de Dados | MySQL      | 8.0     |
-| Contêinerização| Docker     | Latest  |
-
-## 3. Instalação
-
-### Passos para Instalação
-
-1. Clone o repositório:
-```sh
-git clone https://github.com/lorenzouriel/fin-pulse.git
-```
-
-2. Navegue para o diretório do projeto:
-```sh
-cd fin-pulse/database
-```
-
-3. Execute o banco de dados utilizando Docker:
-```sh
-docker-compose up -d
-```
-
-4. Para acessar o banco de dados, utilize:
-```sh
-mysql -h 127.0.0.1 -P 3306 -u stock_user -p
-```
-
-Informe a senha `stock_password` quando solicitado.
-
-5. Para restaurar um backup manualmente, utilize:
-```sh
-docker exec -i container_mysql mysql -u stock_user -pstock_password stock < database/backup/data.sql
-```
-- O comando `docker-compose up -d` já realiza essa restauração do backup.
-
-## 4. Arquitetura
-
-### Estrutura
-O projeto está organizado da seguinte forma:
-```sh
-fin-pulse/
-├── database/
-│   ├── backup/          # Arquivos de backup do banco de dados
-│   │   └── data.sql     # Dump inicial do banco
-│   ├── docs/            # Documentação ERD
-│   ├── tables/          # Query das tabelas e documentação complementar
-├── docker-compose.yaml  # Arquivo de configuração do Docker
-├── README.md            # Documentação principal
-```
-
-### Fluxo de Execução
-
-1. O **Docker Compose** inicia um contêiner MySQL com as credenciais e estrutura definidas no `docker-compose.yaml`.
-2. Caso um arquivo `data.sql` esteja presente, ele é carregado automaticamente na inicialização.
-3. O banco fica acessível na porta `3306` do host, permitindo conexões externas.
-4. Backups podem ser armazenados e restaurados utilizando a pasta `backup/`.
-5. O banco armazena informações sobre ações, incluindo histórico de preços, volume de negociações e dados financeiros relevantes.
